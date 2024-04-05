@@ -1,13 +1,16 @@
 const config = {
-  APP_PORT: 3000,
+  APP_PORT: process.env.APP_PORT,
   REDIS_CONN_DET: {
-    host: "localhost",
-    port: 6379,
+    host: process.env.REDIS_HOST,
+    port: parseInt(process.env.REDIS_PORT),
   },
   PG_CONN_DET: {
-    database: "weather",
+    host: process.env.DB_HOST_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
   },
-  OPEN_WEATHER_API_KEY: "568d5fd93ebcb164606d9f99106505e7",
+  OPEN_WEATHER_API_KEY: process.env.OPEN_WEATHER_API_KEY,
 };
 
 export default config;

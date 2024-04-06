@@ -1,11 +1,9 @@
 import express from "express";
 import router from "./routes/routes.js";
 import errorController from "./controller/errorController.js";
-import { config } from "dotenv";
 import rateLimit from "express-rate-limit";
 import bodyParser from "body-parser";
 
-config();
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

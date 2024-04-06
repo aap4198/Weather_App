@@ -1,5 +1,5 @@
 const config = {
-  APP_PORT: process.env.APP_PORT,
+  APP_PORT: parseInt(process.env.APP_PORT),
   REDIS_CONN_DET: {
     host: process.env.REDIS_HOST,
     port: parseInt(process.env.REDIS_PORT),

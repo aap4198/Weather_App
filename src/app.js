@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   rateLimit({
-    windowMs: 60 * 1000,
+    windowMs: 1000,
     max: 2,
     message: "Too many requests, please try again later.",
   })

@@ -14,18 +14,26 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    docker.build('aap4198/weatherapp')
+                    docker.build('aap4198/weatherapp:latest')
                 }
             }
         }
         stage('Deploy') {
             steps {
                 script {
-                    docker.image('aap4198/weatherapp').withRun('-p 3000:3000 --name my-node-container') {
+                    docker.image('aap4198/weatherapp').withRun('-p 3030:3030 --name weather-app-container') {
                     }
                 }
             }
         }
+
+        stage('Cleanup') {
+            steps {
+                sh 'docker stop weather-app-container || true'
+                sh 'docker rm weather-app-container || true'
+            }
+}
+
     }
 
     post {

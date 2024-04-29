@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+    environment {
+        APP_PORT=3000
+        REDIS_HOST=localhost
+        REDIS_PORT=6379
+        OPEN_WEATHER_API_KEY=568d5fd93ebcb164606d9f99106505e7
+        DB_HOST_NAME=localhost
+        DB_USER=root
+        DB_PASS=root
+        DB_NAME=weather
+    }
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    docker.build('aap4198/weatherapp')
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    docker.image('aap4198/weatherapp').withRun('-p 3000:3000 --name my-node-container') {
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build succeeded!'
+        }
+        failure {
+            echo 'Build failed!'
+        }
+    }
+}

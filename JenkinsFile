@@ -26,10 +26,11 @@ pipeline {
             steps {
                 script {
                     // Run the Docker container
-                    docker.run("-p 3030:3030 --name weather-app-container -d aap4198/weatherapp:latest")
+                    docker.image('aap4198/weatherapp:latest').run('-p', '3030:3030', '--name', 'weather-app-container', '-d')
                 }
             }
-        }
+}
+
 
         stage('Cleanup') {
             steps {

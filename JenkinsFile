@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     environment {
         APP_PORT=3000
         REDIS_HOST=localhost
@@ -10,30 +11,33 @@ pipeline {
         DB_PASS=root
         DB_NAME=weather
     }
+
     stages {
         stage('Build') {
             steps {
                 script {
+                    // Build the Docker image
                     docker.build('aap4198/weatherapp:latest')
                 }
             }
         }
+
         stage('Deploy') {
             steps {
                 script {
-                    docker.image('aap4198/weatherapp').withRun('-p 3030:3030 --name weather-app-container') {
-                    }
+                    // Run the Docker container
+                    docker.run("-p 3030:3030 --name weather-app-container -d aap4198/weatherapp:latest")
                 }
             }
         }
 
         stage('Cleanup') {
             steps {
+                // Stop and remove the Docker container
                 sh 'docker stop weather-app-container || true'
                 sh 'docker rm weather-app-container || true'
             }
-}
-
+        }
     }
 
     post {
